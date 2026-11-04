@@ -1,0 +1,32 @@
+app:
+  android:
+    flavorDimensions: "environment"
+  ios: {}
+
+flavors:
+  dev:
+    app:
+      name: "Clothing Dev"
+    android:
+      applicationId: "com.clothingapp.dev"
+    ios:
+      bundleId: "com.clothingapp.dev"
+
+  staging:
+    app:
+      name: "Clothing Staging"
+    android:
+      applicationId: "com.clothingapp.staging"
+    ios:
+      bundleId: "com.clothingapp.staging"
+
+
+  prod:
+    app:
+      name: "Clothing"
+    android:
+      applicationId: "com.clothingapp"
+    ios:
+      bundleId: "com.clothingapp"
+
+ide: vscode

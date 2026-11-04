@@ -1,0 +1,26 @@
+flutterfire configure `
+  --project=clothing-dev-b9e68 `
+  --out=lib/firebase_options_dev.dart `
+  --platforms=android,ios `
+  --android-package-name=com.clothingapp.dev `
+  --android-out=android/app/src/dev/google-services.json `
+  --ios-bundle-id=com.clothingapp.dev `
+  --ios-out=ios/flavors/dev/GoogleService-Info.plist
+
+flutterfire configure `
+  --project=clothing-staging `
+  --out=lib/firebase_options_staging.dart `
+  --platforms=android,ios `
+  --android-package-name=com.clothingapp.staging `
+  --android-out=android/app/src/staging/google-services.json `
+  --ios-bundle-id=com.clothingapp.staging `
+  --ios-out=ios/flavors/staging/GoogleService-Info.plist
+
+flutterfire configure `
+  --project=clothing-prod-220f3 `
+  --out=lib/firebase_options_production.dart `
+  --platforms=android,ios `
+  --android-package-name=com.clothingapp `
+  --android-out=android/app/src/prod/google-services.json `
+  --ios-bundle-id=com.clothingapp `
+  --ios-out=ios/flavors/prod/GoogleService-Info.plist

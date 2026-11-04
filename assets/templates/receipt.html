@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ÉTOFFE Atelier — {{RECEIPT_TITLE}}</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ivory: #F7F5F0;
+      --white: #FFFFFF;
+      --charcoal: #222222;
+      --terracotta: #E9B9A8;
+      --gray: #E8E6E1;
+      --muted: #888888;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--ivory);
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .receipt {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 44px;
+      background: var(--white);
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid var(--terracotta);
+      color: var(--charcoal);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 23px;
+      letter-spacing: 1.6px;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .brand-address {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-label {
+      min-width: 190px;
+      text-align: right;
+    }
+
+    .receipt-label h1 {
+      margin: 0 0 5px;
+      font-size: 19px;
+      letter-spacing: 2px;
+    }
+
+    .receipt-label p {
+      margin: 2px 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .status-paid {
+      background: #EAF3EC;
+      color: #426B4B;
+    }
+
+    .status-pending {
+      background: var(--ivory);
+      color: #806544;
+    }
+
+    .status-failed,
+    .status-expired {
+      background: #F8E9E7;
+      color: #9B4940;
+    }
+
+    .status-refunded {
+      background: #F1ECE8;
+      color: #68594F;
+    }
+
+    .section {
+      margin-top: 27px;
+    }
+
+    .section-title {
+      margin: 0 0 13px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .info-grid {
+      display: flex;
+      gap: 36px;
+    }
+
+    .info-column {
+      flex: 1;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+
+    .info-column strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .info-line {
+      margin: 2px 0;
+    }
+
+    .fulfillment {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 12px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    th {
+      padding: 10px 8px;
+      background: var(--ivory);
+      text-align: left;
+      font-size: 9px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    th:first-child {
+      width: 52%;
+    }
+
+    th:nth-child(2) {
+      width: 18%;
+    }
+
+    th:nth-child(3) {
+      width: 10%;
+    }
+
+    th:nth-child(4) {
+      width: 20%;
+    }
+
+    td {
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--gray);
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .product-name {
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .product-variant {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .amount {
+      white-space: nowrap;
+    }
+
+    .empty-row {
+      padding: 18px 8px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .summary-wrap {
+      display: flex;
+      justify-content: flex-end;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .totals {
+      width: 310px;
+      max-width: 100%;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 6px 0;
+    }
+
+    .grand-total {
+      margin-top: 8px;
+      padding-top: 13px;
+      border-top: 1px solid var(--charcoal);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .payment-box {
+      padding: 17px 19px;
+      border-left: 3px solid var(--terracotta);
+      background: var(--ivory);
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 4px 0;
+    }
+
+    .payment-row span:last-child {
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid var(--gray);
+      color: var(--muted);
+      font-size: 10px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .footer strong {
+      color: var(--charcoal);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 12px;
+      letter-spacing: 1.4px;
+    }
+
+    @page {
+      size: A4;
+      margin: 13mm;
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      .receipt {
+        padding: 24px 18px;
+      }
+
+      .header {
+        gap: 16px;
+      }
+
+      .brand-lockup {
+        gap: 9px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        font-size: 19px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .receipt-label {
+        min-width: 130px;
+      }
+
+      .receipt-label h1 {
+        font-size: 16px;
+      }
+
+      .info-grid {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      th,
+      td {
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+    }
+
+    @media print {
+      html,
+      body {
+        background: var(--white);
+      }
+
+      body {
+        padding: 0;
+      }
+
+      .receipt {
+        max-width: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="receipt">
+    <header class="header">
+      <div>
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">É</div>
+          <div>
+            <div class="brand">{{STORE_NAME}}</div>
+            <div class="brand-subtitle">Fashion &amp; Lifestyle</div>
+          </div>
+        </div>
+        <div class="brand-address">{{STORE_ADDRESS}}</div>
+      </div>
+      <div class="receipt-label">
+        <h1>{{RECEIPT_TITLE}}</h1>
+        <p class="muted">Order #{{ORDER_NUMBER}}</p>
+        <p class="muted">{{ORDER_DATE}}</p>
+        <div class="status {{PAYMENT_STATUS_CLASS}}">{{PAYMENT_STATUS}}</div>
+      </div>
+    </header>
+
+    <section class="section info-grid" aria-label="Customer and delivery details">
+      <div class="info-column">
+        <strong>Billed to</strong>
+        <div class="info-line">{{CUSTOMER_NAME}}</div>
+        <div class="info-line">{{CUSTOMER_PHONE}}</div>
+        <div class="info-line">{{CUSTOMER_EMAIL}}</div>
+      </div>
+      <div class="info-column">
+        <strong>Delivery address</strong>
+        <div class="info-line">{{DELIVERY_ADDRESS}}</div>
+        <div class="info-line">{{DELIVERY_PHONE}}</div>
+        <div class="fulfillment">Order status: {{FULFILLMENT_STATUS}}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Order details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="right">Unit price</th>
+            <th class="right">Qty</th>
+            <th class="right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ITEM_ROWS}}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section summary-wrap">
+      <div class="totals">
+        <div class="total-row">
+          <span class="muted">Subtotal</span>
+          <span>{{SUBTOTAL}}</span>
+        </div>
+        <div class="total-row">
+          <span class="muted">Discount</span>
+          <span>- {{DISCOUNT}}</span>
+        </div>
+        <div class="total-row">
+          <span class="muted">Delivery fee</span>
+          <span>{{DELIVERY_FEE}}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Total order amount</span>
+          <span>{{GRAND_TOTAL}}</span>
+        </div>
+        {{DEPOSIT_ROWS}}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Payment information</h2>
+      <div class="payment-box">
+        <div class="payment-row">
+          <span class="muted">Payment method</span>
+          <span>{{PAYMENT_METHOD}}</span>
+        </div>
+        <div class="payment-row">
+          <span class="muted">Transaction ID</span>
+          <span>{{TRANSACTION_ID}}</span>
+        </div>
+        <div class="payment-row">
+          <span class="muted">Payment date</span>
+          <span>{{PAYMENT_DATE}}</span>
+        </div>
+        <div class="payment-row">
+          <span class="muted">Payment status</span>
+          <span>{{PAYMENT_STATUS}}</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <strong>{{STORE_NAME}}</strong>
+      <p>Thank you for choosing ÉTOFFE Atelier. Please keep this receipt for your records.</p>
+      <p>{{STORE_CONTACT}}</p>
+      <p>Receipt reference: {{RECEIPT_REFERENCE}}</p>
+    </footer>
+  </main>
+</body>
+</html>

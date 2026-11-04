@@ -1,0 +1,8 @@
+# Development flavor icon config.
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon_dev1.png"
+  adaptive_icon_background: "#F7F5F0"
+  min_sdk_android: 21
+  remove_alpha_ios: true
